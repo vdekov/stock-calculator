@@ -1,4 +1,8 @@
-FROM node:20.9
+# ---------------------------------------
+# Development stage
+# ---------------------------------------
+
+FROM node:20.9 as development
 
 WORKDIR /app
 
@@ -8,4 +12,4 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:dev"]
