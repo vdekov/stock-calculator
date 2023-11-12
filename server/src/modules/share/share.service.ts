@@ -12,6 +12,7 @@ export class ShareService {
 
   async getShareHistory(id: number, getShareHistoryDto: GetShareHistoryDto) {
     console.log(await this.sharesRepository.findOneBy({ id: 1 }));
+    console.log(getShareHistoryDto);
     return `This action return share history based on a date range for #${id}. Params: ${getShareHistoryDto}`;
   }
 }
