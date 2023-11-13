@@ -11,6 +11,12 @@
 .input-date-time {
   height: 30px;
   padding: 4px;
-  border: 1px solid gray;
+  border: 2px solid gray;
   border-radius: 6px;
+  font-size: 15px;
+  font-family: 'Lato';
+}
+
+.invalid-date-time {
+  color: red;
 }

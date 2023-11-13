@@ -1,20 +1,28 @@
 import { useRef } from 'react';
 import { noop } from '../../utils';
 import './InputDateTime.css';
-import { inputDatePattern, inputDatePlaceholder, inputTimePattern } from './constants';
+import { inputDatePattern, inputDatePlaceholder, inputTimePattern, inputTimePlaceholder } from './constants';
 
 type Props = {
   initialDate?: string;
   minDate?: string;
   maxDate?: string;
   initialTime?: string;
+  errorMsg?: string;
   onChange?: (date: Date) => void;
 };
 
 // TODO:
 // - Add fallback support for older browsers
 // - Add client validation
-export const InputDateTime: React.FC<Props> = ({ initialDate, minDate, maxDate, initialTime, onChange = noop }) => {
+export const InputDateTime: React.FC<Props> = ({
+  initialDate,
+  minDate,
+  maxDate,
+  initialTime,
+  errorMsg,
+  onChange = noop,
+}) => {
   const dateInputRef = useRef<HTMLInputElement>(null);
   const timeInputRef = useRef<HTMLInputElement>(null);
 
@@ -50,10 +58,13 @@ export const InputDateTime: React.FC<Props> = ({ initialDate, minDate, maxDate, 
           type="time"
           defaultValue={initialTime}
           step="1"
+          placeholder={inputTimePlaceholder}
           pattern={inputTimePattern}
           onChange={onTimeChange}
         />
+        {}
       </label>
+      {!!errorMsg && <span className="invalid-date-time">{errorMsg}</span>}
     </div>
   );
 };
