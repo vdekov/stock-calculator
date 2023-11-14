@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 import { noop } from '../../utils';
-import './InputDateTime.css';
+import './styles.css';
 import { inputDatePattern, inputDatePlaceholder, inputTimePattern, inputTimePlaceholder } from './constants';
+import { formatDate, formatTime } from '../../utils/date';
 
 type Props = {
-  initialDate?: string;
+  defaultValue: Date;
   minDate?: string;
   maxDate?: string;
-  initialTime?: string;
   errorMsg?: string;
   onChange?: (date: Date) => void;
 };
@@ -15,23 +15,14 @@ type Props = {
 // TODO:
 // - Add fallback support for older browsers
 // - Add client validation
-export const InputDateTime: React.FC<Props> = ({
-  initialDate,
-  minDate,
-  maxDate,
-  initialTime,
-  errorMsg,
-  onChange = noop,
-}) => {
+export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate, errorMsg, onChange = noop }) => {
+  const initialDate = formatDate(defaultValue);
+  const initialTime = formatTime(defaultValue);
   const dateInputRef = useRef<HTMLInputElement>(null);
   const timeInputRef = useRef<HTMLInputElement>(null);
 
-  const onDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(new Date(`${event.target.value} ${timeInputRef.current?.value}`));
-  };
-
-  const onTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(new Date(`${dateInputRef.current?.value} ${event.target.value}`));
+  const onInputChange = () => {
+    onChange(new Date(`${dateInputRef.current?.value} ${timeInputRef.current?.value}`));
   };
 
   return (
@@ -47,7 +38,7 @@ export const InputDateTime: React.FC<Props> = ({
           max={maxDate}
           placeholder={inputDatePlaceholder}
           pattern={inputDatePattern}
-          onChange={onDateChange}
+          onChange={onInputChange}
         />
       </label>
       <label className="label-date-time">
@@ -60,7 +51,7 @@ export const InputDateTime: React.FC<Props> = ({
           step="1"
           placeholder={inputTimePlaceholder}
           pattern={inputTimePattern}
-          onChange={onTimeChange}
+          onChange={onInputChange}
         />
         {}
       </label>

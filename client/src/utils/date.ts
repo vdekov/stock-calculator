@@ -3,7 +3,7 @@
  * @param date Date object
  * @returns string in YYYY-MM-DD format
  */
-export const formatDate = (date = new Date()) => {
+export const formatDate = (date: Date) => {
   const year = date.toLocaleString('default', { year: 'numeric' });
   const month = date.toLocaleString('default', {
     month: '2-digit',
@@ -19,3 +19,10 @@ export const formatDate = (date = new Date()) => {
  * @returns boolean
  */
 export const isValidDate = (date: Date) => date instanceof Date && !isNaN(date.getTime());
+
+/**
+ * Format a Date as HH:MM:SS
+ * @param date Date object
+ * @returns string in HH:MM:SS format
+ */
+export const formatTime = (date: Date) => date.toTimeString().split(' ')[0];
