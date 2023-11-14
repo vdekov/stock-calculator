@@ -1,26 +1,29 @@
+import './styles.css';
+
 import { useState } from 'react';
 import axios from 'axios';
 import { InputDateTime } from '../InputDateTime';
 import { formatDate, isValidDate } from '../../utils/date';
 import { axiosErrorHandler } from '../../utils/axios-error-handler';
-import './styles.css';
 
 const todayDate = formatDate(new Date());
-const yesterdayDate = formatDate(new Date(Date.now() - 24 * 60 * 60 * 1000));
 const twoMonthsAgoDate = formatDate(new Date(Date.now() - 60 * 24 * 60 * 60 * 1000));
 
 export const QueryForm = () => {
-  const [fromDateTime, setFromDateTime] = useState<Date>(new Date(`${yesterdayDate} 09:00:00`));
+  const [fromDateTime, setFromDateTime] = useState<Date>(new Date(Date.now() - 28 * 60 * 60 * 1000));
   const [toDateTime, setToDateTime] = useState<Date>(new Date());
-  const [fromDateError, setFromDateError] = useState('');
-  const [toDateError, setToDateError] = useState('');
+  const [fromDateError, setFromDateError] = useState(false);
+  const [toDateError, setToDateError] = useState(false);
   const [queryFormError, setQueryFormError] = useState('');
 
   const onFromDateTimeChange = (date: Date) => {
+    setFromDateError(false);
+    setQueryFormError('');
     console.log({ date, valid: isValidDate(date) });
 
     if (!isValidDate(date)) {
-      setFromDateError('Invalid date');
+      setFromDateError(true);
+      setQueryFormError('Invalid start date');
       return;
     }
 
@@ -32,15 +35,16 @@ export const QueryForm = () => {
     }
 
     setFromDateTime(date);
-    setFromDateError('');
-    setQueryFormError('');
   };
 
   const onToDateTimeChange = (date: Date) => {
+    setToDateError(false);
+    setQueryFormError('');
     console.log({ date, valid: isValidDate(date) });
 
     if (!isValidDate(date)) {
-      setToDateError('Invalid date');
+      setToDateError(true);
+      setQueryFormError('Invalid end date');
       return;
     }
 
@@ -52,8 +56,6 @@ export const QueryForm = () => {
     }
 
     setToDateTime(date);
-    setToDateError('');
-    setQueryFormError('');
   };
 
   const validateQueryForm = (fromDateTime: Date, toDateTime: Date) => {
@@ -92,26 +94,26 @@ export const QueryForm = () => {
 
   return (
     <>
-      <div>
+      <div className="wrapper-query-form">
         <InputDateTime
           defaultValue={fromDateTime}
           minDate={twoMonthsAgoDate}
           maxDate={todayDate}
-          errorMsg={fromDateError}
+          isValid={!fromDateError}
           onChange={onFromDateTimeChange}
         />
         <InputDateTime
           defaultValue={toDateTime}
           minDate={twoMonthsAgoDate}
           maxDate={todayDate}
-          errorMsg={toDateError}
+          isValid={!toDateError}
           onChange={onToDateTimeChange}
         />
       </div>
-      <button disabled={!!fromDateError || !!toDateError || !!queryFormError} onClick={onCheckButtonClick}>
+      <div className="invalid-query-form">{queryFormError && `🚨 ${queryFormError}`}</div>
+      <button disabled={!!queryFormError} onClick={onCheckButtonClick}>
         Check
       </button>
-      {!!queryFormError && <div className="invalid-query-form">{queryFormError}</div>}
     </>
   );
 };

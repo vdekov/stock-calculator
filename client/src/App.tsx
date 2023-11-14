@@ -3,7 +3,11 @@ import './App.css';
 import { QueryForm } from './components/QueryForm';
 
 const App = () => {
-  return <QueryForm />;
+  return (
+    <div className="app-container">
+      <QueryForm />
+    </div>
+  );
 };
 
 export default App;

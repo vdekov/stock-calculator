@@ -7,7 +7,6 @@ export class ShareController {
   constructor(private readonly shareService: ShareService) {}
 
   @Post(':id/history')
-  // eslint-disable-next-line prettier/prettier
   getShareHistory(@Param('id') id: string, @Body() getShareHistoryDto: GetShareHistoryDto) {
     // TODO:
     // - to should be before the current date

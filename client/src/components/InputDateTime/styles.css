@@ -1,6 +1,15 @@
 .wrapper-date-time {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  padding: 8px;
+  background-color: #fff;
+  transition: background-color .3s;
+  will-change: background-color;
+}
+
+.wrapper-date-time.invalid {
+  background-color: #ffe0e0;
 }
 
 .label-date-time {
@@ -9,12 +18,16 @@
 }
 
 .input-date-time {
+  display: block;
+  width: 150px;
   height: 30px;
+  margin-top: 4px;
   padding: 4px;
   border: 2px solid gray;
   border-radius: 6px;
   font-size: 15px;
   font-family: 'Lato';
+  line-height: 30px;
 }
 
 .invalid-date-time {
