@@ -8,9 +8,6 @@ export class ShareController {
 
   @Post(':id/history')
   getShareHistory(@Param('id') id: string, @Body() getShareHistoryDto: GetShareHistoryDto) {
-    // TODO:
-    // - to should be before the current date
-    // - from should preceed to
     return this.shareService.getShareHistory(+id, getShareHistoryDto);
   }
 }
