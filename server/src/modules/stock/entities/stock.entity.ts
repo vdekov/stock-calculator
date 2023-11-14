@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('stock_history')
-export class Share {
+export class Stock {
   @PrimaryGeneratedColumn()
   id: number;
 

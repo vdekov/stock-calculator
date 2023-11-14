@@ -1,6 +1,6 @@
 import { IsDateString } from 'class-validator';
 
-export class GetShareHistoryDto {
+export class GetStockHistoryDto {
   @IsDateString({ strict: true })
   from: string;
 

@@ -3,7 +3,7 @@ import { ApiModule } from './modules/api/api.module';
 import { RouterModule } from '@nestjs/core';
 import { routes } from './routes';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Share } from './modules/share/entities/share.entity';
+import { Stock } from './modules/stock/entities/stock.entity';
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { Share } from './modules/share/entities/share.entity';
       port: 3307,
       username: 'root',
       database: 'stock_calculator',
-      entities: [Share],
+      entities: [Stock],
       // synchronize: true, // synchronize: true; shouldn't be used in production
     }),
   ],

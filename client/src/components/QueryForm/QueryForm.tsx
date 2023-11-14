@@ -9,6 +9,7 @@ import { axiosErrorHandler } from '../../utils/axios-error-handler';
 const todayDate = formatDate(new Date());
 const twoMonthsAgoDate = formatDate(new Date(Date.now() - 60 * 24 * 60 * 60 * 1000));
 
+// TODO: Add loading spinner
 export const QueryForm = () => {
   const [fromDateTime, setFromDateTime] = useState<Date>(new Date(Date.now() - 28 * 60 * 60 * 1000));
   const [toDateTime, setToDateTime] = useState<Date>(new Date());
@@ -76,7 +77,7 @@ export const QueryForm = () => {
   const onCheckButtonClick = async () => {
     console.log('>>> send XHR', { fromDateTime, toDateTime });
     try {
-      const response = await axios.post('http://localhost:3000/api/share/1/history', {
+      const response = await axios.post('http://localhost:3000/api/stock/history', {
         from: fromDateTime,
         to: toDateTime,
       });

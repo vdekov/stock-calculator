@@ -1,6 +1,6 @@
 import { Routes } from '@nestjs/core';
 import { ApiModule } from './modules/api/api.module';
-import { ShareModule } from './modules/share/share.module';
+import { StockModule } from './modules/stock/stock.module';
 
 export const API_PREFIX = 'api';
 
@@ -11,8 +11,8 @@ export const routes: Routes = [
     module: ApiModule,
     children: [
       {
-        path: 'share',
-        module: ShareModule,
+        path: 'stock',
+        module: StockModule,
       },
     ],
   },

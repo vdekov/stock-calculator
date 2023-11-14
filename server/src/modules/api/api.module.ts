@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ShareModule } from '../share/share.module';
+import { StockModule } from '../stock/stock.module';
 
 @Module({
-  imports: [ShareModule],
+  imports: [StockModule],
 })
 export class ApiModule {}
