@@ -5,16 +5,18 @@ import { routes } from './routes';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Stock } from './modules/stock/entities/stock.entity';
 
+const { DB_PORT, DB_DATABASE, DB_HOST, DB_USER } = process.env;
+
 @Module({
   imports: [
     ApiModule,
     RouterModule.register(routes),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'database',
-      port: 3307,
-      username: 'root',
-      database: 'stock_calculator',
+      host: DB_HOST,
+      port: +DB_PORT,
+      username: DB_USER,
+      database: DB_DATABASE,
       entities: [Stock],
       // synchronize: true, // synchronize: true; shouldn't be used in production
     }),

@@ -12,8 +12,9 @@ export const ProfitCalculator: React.FC<Props> = ({ stockHistory }) => {
   const [investmentAmount, setInvestmentAmount] = useState<number>(0);
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (typeof +event.target.value === 'number') {
-      setInvestmentAmount(+event.target.value);
+    const value = +event.target.value;
+    if (typeof value === 'number' && isFinite(value)) {
+      setInvestmentAmount(value);
     }
   };
 

@@ -10,6 +10,8 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-  await app.listen(3000);
+  await app.listen(process.env.APP_PORT, () => {
+    console.log('Stock Calculator server started successfully.');
+  });
 }
 bootstrap();

@@ -17,26 +17,28 @@ export const ProfitTable: React.FC<Props> = ({ investmentAmount, stockHistory })
 
   return (
     <table className="table-summary">
-      <tr>
-        <td>Buy at: </td>
-        <td>{dateAsString(minDateTime)}</td>
-      </tr>
-      <tr>
-        <td>Sell at: </td>
-        <td>{dateAsString(maxDateTime)}</td>
-      </tr>
-      {!!investmentAmount && (
-        <>
-          <tr>
-            <td>Shares: </td>
-            <td>{sharesAmount.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td>Profit: </td>
-            <td>{profit.toFixed(2)}</td>
-          </tr>
-        </>
-      )}
+      <tbody>
+        <tr>
+          <td>Buy at: </td>
+          <td>{dateAsString(minDateTime)}</td>
+        </tr>
+        <tr>
+          <td>Sell at: </td>
+          <td>{dateAsString(maxDateTime)}</td>
+        </tr>
+        {!!investmentAmount && (
+          <>
+            <tr>
+              <td>Shares: </td>
+              <td>{sharesAmount.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td>Profit: </td>
+              <td>{profit.toFixed(2)}</td>
+            </tr>
+          </>
+        )}
+      </tbody>
     </table>
   );
 };
