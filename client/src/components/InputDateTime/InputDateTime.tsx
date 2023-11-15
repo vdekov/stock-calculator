@@ -27,8 +27,8 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
 
   return (
     <div className={`wrapper-date-time ${!isValid && 'invalid'}`}>
-      <label className="label-date-time">
-        📆&nbsp;Date:&nbsp;
+      <label>
+        📆&nbsp;Date&nbsp;
         <input
           ref={dateInputRef}
           className="input-date-time"
@@ -41,8 +41,8 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
           onChange={onInputChange}
         />
       </label>
-      <label className="label-date-time">
-        🕗&nbsp;Time (24h):&nbsp;
+      <label>
+        🕗&nbsp;Time (24h)&nbsp;
         <input
           ref={timeInputRef}
           className="input-date-time"

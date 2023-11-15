@@ -45,3 +45,19 @@
   max-width: 600px;
   width: 100%;
 }
+
+label {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+input {
+  width: 150px;
+  height: 30px;
+  padding: 4px;
+  border: 2px solid gray;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: 'Lato';
+  line-height: 30px;
+}

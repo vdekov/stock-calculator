@@ -12,22 +12,9 @@
   background-color: #ffe0e0;
 }
 
-.label-date-time {
-  font-weight: 700;
-  cursor: pointer;
-}
-
 .input-date-time {
   display: block;
-  width: 150px;
-  height: 30px;
   margin-top: 4px;
-  padding: 4px;
-  border: 2px solid gray;
-  border-radius: 6px;
-  font-size: 15px;
-  font-family: 'Lato';
-  line-height: 30px;
 }
 
 .invalid-date-time {

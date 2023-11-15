@@ -26,3 +26,13 @@ export const isValidDate = (date: Date) => date instanceof Date && !isNaN(date.g
  * @returns string in HH:MM:SS format
  */
 export const formatTime = (date: Date) => date.toTimeString().split(' ')[0];
+
+/**
+ * Return a date in a human readable format
+ * @param date either Date or string
+ * @returns string - date in a human readable format
+ */
+export const dateAsString = (date: Date | string) => {
+  const dateObj = new Date(date);
+  return [dateObj.toDateString(), dateObj.toLocaleTimeString()].join(', ');
+};

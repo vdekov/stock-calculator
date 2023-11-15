@@ -14,6 +14,8 @@ export const axiosErrorHandler = (e: unknown): ErrorType => {
       const { statusCode, message } = error.response.data;
       if (statusCode === 400) {
         return { message: 'Invalid parameters. Please, try again.', error: message };
+      } else if (statusCode === 404) {
+        return { message: 'No results found matching the criteria.', error: message };
       } else {
         return { message: 'Ops! Something went wrong!', error: message };
       }

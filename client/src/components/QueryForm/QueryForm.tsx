@@ -1,21 +1,24 @@
 import './styles.css';
 
 import { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { InputDateTime } from '../InputDateTime';
 import { formatDate, isValidDate } from '../../utils/date';
 import { axiosErrorHandler } from '../../utils/axios-error-handler';
+import { GetStockHistoryParams, GetStockHistoryResponse } from '../../typings';
+import { ProfitCalculator } from '../ProfitCalculator';
 
 const todayDate = formatDate(new Date());
 const twoMonthsAgoDate = formatDate(new Date(Date.now() - 60 * 24 * 60 * 60 * 1000));
 
-// TODO: Add loading spinner
 export const QueryForm = () => {
   const [fromDateTime, setFromDateTime] = useState<Date>(new Date(Date.now() - 28 * 60 * 60 * 1000));
   const [toDateTime, setToDateTime] = useState<Date>(new Date());
   const [fromDateError, setFromDateError] = useState(false);
   const [toDateError, setToDateError] = useState(false);
   const [queryFormError, setQueryFormError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [stockHistory, setStockHistory] = useState<GetStockHistoryResponse | null>(null);
 
   const onFromDateTimeChange = (date: Date) => {
     setFromDateError(false);
@@ -36,6 +39,7 @@ export const QueryForm = () => {
     }
 
     setFromDateTime(date);
+    setStockHistory(null);
   };
 
   const onToDateTimeChange = (date: Date) => {
@@ -57,6 +61,7 @@ export const QueryForm = () => {
     }
 
     setToDateTime(date);
+    setStockHistory(null);
   };
 
   const validateQueryForm = (fromDateTime: Date, toDateTime: Date) => {
@@ -76,12 +81,17 @@ export const QueryForm = () => {
 
   const onCheckButtonClick = async () => {
     console.log('>>> send XHR', { fromDateTime, toDateTime });
+    setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:3000/api/stock/history', {
+      const { data } = await axios.post<
+        GetStockHistoryResponse,
+        AxiosResponse<GetStockHistoryResponse>,
+        GetStockHistoryParams
+      >('http://localhost:3000/api/stock/history', {
         from: fromDateTime,
         to: toDateTime,
       });
-      console.log(response);
+      setStockHistory(data);
     } catch (e) {
       const { message, error } = axiosErrorHandler(e);
       setQueryFormError(message);
@@ -90,31 +100,40 @@ export const QueryForm = () => {
       if (error) {
         console.warn(error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <>
-      <div className="wrapper-query-form">
-        <InputDateTime
-          defaultValue={fromDateTime}
-          minDate={twoMonthsAgoDate}
-          maxDate={todayDate}
-          isValid={!fromDateError}
-          onChange={onFromDateTimeChange}
-        />
-        <InputDateTime
-          defaultValue={toDateTime}
-          minDate={twoMonthsAgoDate}
-          maxDate={todayDate}
-          isValid={!toDateError}
-          onChange={onToDateTimeChange}
-        />
+    <div className="query-form">
+      <div className={`wrapper-query-form ${isLoading && 'loading'}`}>
+        <div>
+          <span className="label-input-date-time">From</span>
+          <InputDateTime
+            defaultValue={fromDateTime}
+            minDate={twoMonthsAgoDate}
+            maxDate={todayDate}
+            isValid={!fromDateError}
+            onChange={onFromDateTimeChange}
+          />
+        </div>
+        <div>
+          <span className="label-input-date-time">To</span>
+          <InputDateTime
+            defaultValue={toDateTime}
+            minDate={twoMonthsAgoDate}
+            maxDate={todayDate}
+            isValid={!toDateError}
+            onChange={onToDateTimeChange}
+          />
+        </div>
       </div>
       <div className="invalid-query-form">{queryFormError && `🚨 ${queryFormError}`}</div>
-      <button disabled={!!queryFormError} onClick={onCheckButtonClick}>
+      <ProfitCalculator stockHistory={stockHistory} />
+      <button className="btn-submit-query-form" disabled={isLoading || !!queryFormError} onClick={onCheckButtonClick}>
         Check
       </button>
-    </>
+    </div>
   );
 };

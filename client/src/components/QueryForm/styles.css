@@ -1,6 +1,21 @@
 .wrapper-query-form {
+  position: relative;
   display: flex;
   gap: 48px;
+}
+
+.wrapper-query-form.loading::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/loading-spinner.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wrapper-query-form.loading > * {
+  filter: blur(2px);
 }
 
 .invalid-query-form {
@@ -9,4 +24,15 @@
   justify-content: center;
   height: 32px;
   color: red;
+}
+
+.label-input-date-time {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 700;;
+}
+
+.btn-submit-query-form {
+  margin-top: 16px;
 }

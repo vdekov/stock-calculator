@@ -1,0 +1,16 @@
+.wrapper-profit-calculator,
+.label-profit-calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+table.table-summary {
+  margin-top: 16px;
+  border: none;
+  text-align: left;
+}
+
+table.table-summary tr > td:first-child {
+  font-weight: 700;
+}
