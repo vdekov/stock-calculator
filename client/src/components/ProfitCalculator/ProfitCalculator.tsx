@@ -1,7 +1,7 @@
 import './styles.css';
 
 import { useState } from 'react';
-import { GetStockHistoryResponse } from '../../typings';
+import { GetStockHistoryResponse } from '@/typings';
 import { ProfitTable } from './ProfitTable';
 
 type Props = {

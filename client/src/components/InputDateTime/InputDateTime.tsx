@@ -1,8 +1,8 @@
 import './styles.css';
 import { useRef } from 'react';
-import { noop } from '../../utils';
+import { noop } from '@/utils';
+import { formatDate, formatTime } from '@/utils/date';
 import { inputDatePattern, inputDatePlaceholder, inputTimePattern, inputTimePlaceholder } from './constants';
-import { formatDate, formatTime } from '../../utils/date';
 
 type Props = {
   defaultValue: Date;
@@ -23,7 +23,7 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
   };
 
   return (
-    <div className={`wrapper-date-time ${!isValid && 'invalid'}`}>
+    <div className={`wrapper-date-time ${isValid ? '' : 'invalid'}`}>
       <label>
         📆&nbsp;Date&nbsp;
         <input
@@ -36,6 +36,7 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
           placeholder={inputDatePlaceholder}
           pattern={inputDatePattern}
           onChange={onInputChange}
+          data-testid="input-date"
         />
       </label>
       <label>
@@ -49,6 +50,7 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
           placeholder={inputTimePlaceholder}
           pattern={inputTimePattern}
           onChange={onInputChange}
+          data-testid="input-time"
         />
       </label>
     </div>

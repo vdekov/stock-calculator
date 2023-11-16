@@ -1,5 +1,5 @@
-import { render, screen } from '../utils/test-utils';
-import App from '../App';
+import { render, screen } from '@/utils/test-utils';
+import App from '@/App';
 
 describe('App', () => {
   it('the heading is visible', () => {

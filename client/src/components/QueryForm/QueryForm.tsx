@@ -2,11 +2,11 @@ import './styles.css';
 
 import { useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { InputDateTime } from '../InputDateTime';
-import { formatDate, isValidDate } from '../../utils/date';
-import { axiosErrorHandler } from '../../utils/axios-error-handler';
-import { GetStockHistoryParams, GetStockHistoryResponse } from '../../typings';
-import { ProfitCalculator } from '../ProfitCalculator';
+import { GetStockHistoryParams, GetStockHistoryResponse } from '@/typings';
+import { formatDate, isValidDate } from '@/utils/date';
+import { InputDateTime } from '@/components/InputDateTime';
+import { ProfitCalculator } from '@/components/ProfitCalculator';
+import { axiosErrorHandler } from '@/utils/axios-error-handler';
 
 const todayDate = formatDate(new Date());
 const twoMonthsAgoDate = formatDate(new Date(Date.now() - 60 * 24 * 60 * 60 * 1000));
