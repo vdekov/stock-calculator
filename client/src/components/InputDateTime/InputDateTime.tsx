@@ -12,9 +12,6 @@ type Props = {
   onChange?: (date: Date) => void;
 };
 
-// TODO:
-// - Add fallback support for older browsers
-// - Add client validation
 export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate, isValid = true, onChange = noop }) => {
   const initialDate = formatDate(defaultValue);
   const initialTime = formatTime(defaultValue);
