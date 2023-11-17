@@ -1,5 +1,11 @@
 import { axiosErrorHandler } from '@/utils/axios-error-handler';
 
+const ERROR_MESSAGES = {
+  BAD_PARAMETERS: 'Invalid parameters. Please, try again.',
+  NOT_FOUND: 'No results found matching the criteria.',
+  GENERIC_ERROR: 'Ops! Something went wrong!',
+};
+
 describe('axiosErrorHandler', () => {
   test('handles AxiosError with status code 400 (bad parameters)', () => {
     const axiosError = {
@@ -15,7 +21,7 @@ describe('axiosErrorHandler', () => {
     const result = axiosErrorHandler(axiosError);
 
     expect(result).toEqual({
-      message: 'Invalid parameters. Please, try again.',
+      message: ERROR_MESSAGES.BAD_PARAMETERS,
       error: 'Server error message',
     });
   });
@@ -34,7 +40,7 @@ describe('axiosErrorHandler', () => {
     const result = axiosErrorHandler(axiosError);
 
     expect(result).toEqual({
-      message: 'No results found matching the criteria.',
+      message: ERROR_MESSAGES.NOT_FOUND,
       error: 'Not Found',
     });
   });
@@ -53,7 +59,7 @@ describe('axiosErrorHandler', () => {
     const result = axiosErrorHandler(axiosError);
 
     expect(result).toEqual({
-      message: 'Ops! Something went wrong!',
+      message: ERROR_MESSAGES.GENERIC_ERROR,
       error: 'Internal Server Error',
     });
   });
@@ -67,7 +73,7 @@ describe('axiosErrorHandler', () => {
     const result = axiosErrorHandler(axiosError);
 
     expect(result).toEqual({
-      message: 'Ops! Something went wrong!',
+      message: ERROR_MESSAGES.GENERIC_ERROR,
     });
   });
 
@@ -76,7 +82,7 @@ describe('axiosErrorHandler', () => {
     const result = axiosErrorHandler(jsError);
 
     expect(result).toEqual({
-      message: 'Ops! Something went wrong!',
+      message: ERROR_MESSAGES.GENERIC_ERROR,
       error: 'Custom error message',
     });
   });
@@ -86,7 +92,7 @@ describe('axiosErrorHandler', () => {
     const result = axiosErrorHandler(genericError);
 
     expect(result).toEqual({
-      message: 'Ops! Something went wrong!',
+      message: ERROR_MESSAGES.GENERIC_ERROR,
       error: 'Generic error message',
     });
   });

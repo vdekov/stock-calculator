@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios';
+import { ERROR_MESSAGES } from './constants';
 
 type ErrorType = {
   message: string;
@@ -13,18 +14,18 @@ export const axiosErrorHandler = (e: unknown): ErrorType => {
     if (error.response?.data) {
       const { statusCode, message } = error.response.data;
       if (statusCode === 400) {
-        return { message: 'Invalid parameters. Please, try again.', error: message };
+        return { message: ERROR_MESSAGES.BAD_PARAMETERS, error: message };
       } else if (statusCode === 404) {
-        return { message: 'No results found matching the criteria.', error: message };
+        return { message: ERROR_MESSAGES.NOT_FOUND, error: message };
       } else {
-        return { message: 'Ops! Something went wrong!', error: message };
+        return { message: ERROR_MESSAGES.GENERIC_ERROR, error: message };
       }
     }
   } else {
     // In case of native JavaScript error
-    return { message: 'Ops! Something went wrong!', error: error.message };
+    return { message: ERROR_MESSAGES.GENERIC_ERROR, error: error.message };
   }
 
   // Generic error message
-  return { message: 'Ops! Something went wrong!' };
+  return { message: ERROR_MESSAGES.GENERIC_ERROR };
 };

@@ -1,15 +1,12 @@
 import './styles.css';
 
-import { useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { GetStockHistoryParams, GetStockHistoryResponse } from '@/typings';
-import { formatDate, isValidDate } from '@/utils/date';
+import { useCallback, useState } from 'react';
+import { GetStockHistoryResponse } from '@/typings';
+import { formatDate, isValidDate, validateDates } from '@/utils/date';
 import { InputDateTime } from '@/components/InputDateTime';
 import { ProfitCalculator } from '@/components/ProfitCalculator';
-import { axiosErrorHandler } from '@/utils/axios-error-handler';
-
-const todayDate = formatDate(new Date());
-const twoMonthsAgoDate = formatDate(new Date(Date.now() - 60 * 24 * 60 * 60 * 1000));
+import { ERROR_MESSAGES } from '@/utils/constants';
+import { getStockHistory } from '@/api';
 
 export const QueryForm = () => {
   const [fromDateTime, setFromDateTime] = useState<Date>(new Date(Date.now() - 28 * 60 * 60 * 1000));
@@ -20,18 +17,26 @@ export const QueryForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [stockHistory, setStockHistory] = useState<GetStockHistoryResponse | null>(null);
 
-  const onFromDateTimeChange = (date: Date) => {
+  const todayDate = formatDate(new Date());
+  const twoMonthsAgoDate = formatDate(new Date(Date.now() - 60 * 24 * 60 * 60 * 1000));
+
+  const resetForm = useCallback(() => {
     setFromDateError(false);
+    setToDateError(false);
     setQueryFormError('');
-    console.log({ date, valid: isValidDate(date) });
+    setStockHistory(null);
+  }, []);
+
+  const onFromDateTimeChange = (date: Date) => {
+    resetForm();
 
     if (!isValidDate(date)) {
       setFromDateError(true);
-      setQueryFormError('Invalid start date');
+      setQueryFormError(ERROR_MESSAGES.INVALID_START_DATE);
       return;
     }
 
-    const validationMessage = validateQueryForm(date, toDateTime);
+    const validationMessage = validateDates(date, toDateTime);
 
     if (validationMessage) {
       setQueryFormError(validationMessage);
@@ -39,21 +44,18 @@ export const QueryForm = () => {
     }
 
     setFromDateTime(date);
-    setStockHistory(null);
   };
 
   const onToDateTimeChange = (date: Date) => {
-    setToDateError(false);
-    setQueryFormError('');
-    console.log({ date, valid: isValidDate(date) });
+    resetForm();
 
     if (!isValidDate(date)) {
       setToDateError(true);
-      setQueryFormError('Invalid end date');
+      setQueryFormError(ERROR_MESSAGES.INVALID_END_DATE);
       return;
     }
 
-    const validationMessage = validateQueryForm(fromDateTime, date);
+    const validationMessage = validateDates(fromDateTime, date);
 
     if (validationMessage) {
       setQueryFormError(validationMessage);
@@ -61,45 +63,16 @@ export const QueryForm = () => {
     }
 
     setToDateTime(date);
-    setStockHistory(null);
-  };
-
-  const validateQueryForm = (fromDateTime: Date, toDateTime: Date) => {
-    const now = new Date();
-    if (fromDateTime > now) {
-      return 'Start date must be no later than now.';
-    }
-
-    if (toDateTime > now) {
-      return 'End date must be no later than now.';
-    }
-
-    if (fromDateTime >= toDateTime) {
-      return 'Start date must precede end date.';
-    }
   };
 
   const onCheckButtonClick = async () => {
-    console.log('>>> send XHR', { fromDateTime, toDateTime });
     setIsLoading(true);
-    try {
-      const { data } = await axios.post<
-        GetStockHistoryResponse,
-        AxiosResponse<GetStockHistoryResponse>,
-        GetStockHistoryParams
-      >('http://localhost:3000/api/stock/history', {
-        from: fromDateTime,
-        to: toDateTime,
-      });
-      setStockHistory(data);
-    } catch (e) {
-      const { message, error } = axiosErrorHandler(e);
-      setQueryFormError(message);
 
-      // Log the specific error in the dev console
-      if (error) {
-        console.warn(error);
-      }
+    try {
+      const stockHistory = await getStockHistory(fromDateTime, toDateTime);
+      setStockHistory(stockHistory);
+    } catch (e) {
+      setQueryFormError(e as string);
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +80,7 @@ export const QueryForm = () => {
 
   return (
     <div className="query-form">
-      <div className={`wrapper-query-form ${isLoading && 'loading'}`}>
+      <div className={`wrapper-query-form ${isLoading ? 'loading' : ''}`}>
         <div>
           <span className="label-input-date-time">From</span>
           <InputDateTime

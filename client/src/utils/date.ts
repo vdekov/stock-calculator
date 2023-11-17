@@ -1,3 +1,5 @@
+import { ERROR_MESSAGES } from './constants';
+
 /**
  * Format a Date as YYYY-MM-DD
  * @param date Date object
@@ -38,3 +40,26 @@ export const dateAsString = (date: Date | string) =>
     timeStyle: 'medium',
     hour12: false,
   });
+
+/**
+ * Returns either the error message or an empty string when there is not error
+ * @param fromDateTime Date object
+ * @param toDateTime Date object
+ * @returns string
+ */
+export const validateDates = (fromDateTime: Date, toDateTime: Date) => {
+  const now = new Date();
+  if (fromDateTime > now) {
+    return ERROR_MESSAGES.LATE_START_DATE;
+  }
+
+  if (toDateTime > now) {
+    return ERROR_MESSAGES.LATE_END_DATE;
+  }
+
+  if (fromDateTime >= toDateTime) {
+    return ERROR_MESSAGES.INVALID_DATE_RANGE;
+  }
+
+  return '';
+};
