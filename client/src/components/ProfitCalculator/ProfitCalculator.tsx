@@ -22,7 +22,7 @@ export const ProfitCalculator: React.FC<Props> = ({ stockHistory }) => {
     <div className="wrapper-profit-calculator">
       <label className="label-profit-calculator">
         💵&nbsp;Investment amount
-        <input type="number" onChange={onInputChange} />
+        <input type="number" onChange={onInputChange} data-testid="input-investment" />
       </label>
       <ProfitTable investmentAmount={investmentAmount} stockHistory={stockHistory} />
     </div>
