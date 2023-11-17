@@ -65,10 +65,6 @@ export const QueryForm = () => {
   };
 
   const validateQueryForm = (fromDateTime: Date, toDateTime: Date) => {
-    if (fromDateTime >= toDateTime) {
-      return 'Start date must precede end date.';
-    }
-
     const now = new Date();
     if (fromDateTime > now) {
       return 'Start date must be no later than now.';
@@ -76,6 +72,10 @@ export const QueryForm = () => {
 
     if (toDateTime > now) {
       return 'End date must be no later than now.';
+    }
+
+    if (fromDateTime >= toDateTime) {
+      return 'Start date must precede end date.';
     }
   };
 
@@ -131,7 +131,12 @@ export const QueryForm = () => {
       </div>
       <div className="invalid-query-form">{queryFormError && `🚨 ${queryFormError}`}</div>
       <ProfitCalculator stockHistory={stockHistory} />
-      <button className="btn-submit-query-form" disabled={isLoading || !!queryFormError} onClick={onCheckButtonClick}>
+      <button
+        className="btn-submit-query-form"
+        disabled={isLoading || !!queryFormError}
+        onClick={onCheckButtonClick}
+        data-testid="btn-submit"
+      >
         Check
       </button>
     </div>

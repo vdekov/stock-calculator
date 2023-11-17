@@ -32,7 +32,9 @@ export const formatTime = (date: Date) => date.toTimeString().split(' ')[0];
  * @param date either Date or string
  * @returns string - date in a human readable format
  */
-export const dateAsString = (date: Date | string) => {
-  const dateObj = new Date(date);
-  return [dateObj.toDateString(), dateObj.toLocaleTimeString()].join(', ');
-};
+export const dateAsString = (date: Date | string) =>
+  new Date(date).toLocaleString('en-US', {
+    dateStyle: 'full',
+    timeStyle: 'medium',
+    hour12: false,
+  });

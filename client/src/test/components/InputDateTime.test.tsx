@@ -6,7 +6,7 @@ describe('InputDateTime UI component', () => {
     defaultValue: new Date('01.01.2023 00:00:00'),
   };
 
-  it('render as expected', () => {
+  it('renders as expected', () => {
     render(<InputDateTime {...props} />);
 
     expect(screen.getByLabelText(/📆 date/i)).toBeInTheDocument();
@@ -17,7 +17,7 @@ describe('InputDateTime UI component', () => {
     expect(screen.getByTestId('input-time')).toHaveValue('00:00:00');
   });
 
-  it('date react on change', () => {
+  it('date reacts on change', () => {
     render(<InputDateTime {...props} />);
 
     const input = screen.getByTestId('input-date');
@@ -26,7 +26,7 @@ describe('InputDateTime UI component', () => {
     expect(input).toHaveValue('2023-06-06');
   });
 
-  it('time react on invalid change', () => {
+  it('time reacts on invalid change', () => {
     render(<InputDateTime {...props} />);
 
     const input = screen.getByTestId('input-time');
@@ -35,7 +35,7 @@ describe('InputDateTime UI component', () => {
     expect(input).toHaveValue('01:00:00');
   });
 
-  it('handle invalid datetime', () => {
+  it('handles invalid datetime', () => {
     const { container } = render(<InputDateTime {...props} isValid={false} />);
 
     expect(container).toBeInTheDocument();

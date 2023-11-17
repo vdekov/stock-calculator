@@ -22,7 +22,6 @@ export const axiosErrorHandler = (e: unknown): ErrorType => {
     }
   } else {
     // In case of native JavaScript error
-    console.log(error);
     return { message: 'Ops! Something went wrong!', error: error.message };
   }
 
