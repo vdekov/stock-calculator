@@ -1,6 +1,7 @@
 version: '3'
 services:
   server:
+    container_name: stock-calculator-server
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -20,6 +21,7 @@ services:
       - APP_PORT=3000
 
   client:
+    container_name: stock-calculator-client
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -34,6 +36,7 @@ services:
       - APP_PORT=5173
 
   database:
+    container_name: stock-calculator-database
     image: mysql:5.7
     ports:
       - "3307:3307"

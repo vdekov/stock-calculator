@@ -26,13 +26,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN npm install
+
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-RUN npm install
-
 COPY . .
 
-RUN npm run build
-
-CMD [ "npm", "run", "preview" ]
+ENTRYPOINT npm run build && npm run preview

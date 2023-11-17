@@ -11,7 +11,7 @@ async function bootstrap() {
     }),
   );
   await app.listen(process.env.APP_PORT, () => {
-    console.log('Stock Calculator server started successfully.');
+    console.log(`Stock Calculator server started successfully on port ${process.env.APP_PORT}.`);
   });
 }
 bootstrap();
