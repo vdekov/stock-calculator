@@ -5,6 +5,7 @@ import { GetStockHistoryDto } from './dto';
 import { Stock } from './entities/stock.entity';
 import { findMostProfitableRange } from '../../utils';
 import { GetStockHistoryResponse } from './types';
+import { ERROR_MESSAGES } from './constants';
 
 @Injectable()
 export class StockService {
@@ -14,20 +15,20 @@ export class StockService {
     const { from, to } = getStockHistoryDto;
 
     // Validate input parameters for the following cases:
-    // - from must be before to date
     // - from must be before the current date
     // - to must be before the current date
-    if (from >= to) {
-      throw new BadRequestException('The `from` parameter must be no later than the `to` parameter.');
-    }
-
+    // - from must be before to date
     const now = new Date().toISOString();
     if (from > now) {
-      throw new BadRequestException('The `from` parameter must be no later than now.');
+      throw new BadRequestException(ERROR_MESSAGES.INVALID_START_DATE);
     }
 
     if (to > now) {
-      throw new BadRequestException('The `to` parameter must be no later than now.');
+      throw new BadRequestException(ERROR_MESSAGES.INVALID_END_DATE);
+    }
+
+    if (from >= to) {
+      throw new BadRequestException(ERROR_MESSAGES.INVALID_DATE_RANGE);
     }
 
     //1699178050 -> 1699178170
@@ -43,12 +44,12 @@ export class StockService {
         .orderBy('stock.timestamp', 'ASC')
         .getMany();
     } catch (e) {
-      throw new ServiceUnavailableException('The server is not ready to handle the request. Try again later.');
+      throw new ServiceUnavailableException(ERROR_MESSAGES.SQL_ERROR);
     }
 
     // Validation in case there are no results found to the search criteria in the database
     if (!sqlResult.length) {
-      throw new NotFoundException('There are no results found matching the search criteria.');
+      throw new NotFoundException(ERROR_MESSAGES.NO_RESULTS_FOUND);
     }
 
     const profit = findMostProfitableRange(sqlResult);
