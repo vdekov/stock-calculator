@@ -15,7 +15,7 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+CMD npm run dev
 
 # ---------------------------------------
 # Production stage
@@ -33,4 +33,4 @@ ENV NODE_ENV=${NODE_ENV}
 
 COPY . .
 
-ENTRYPOINT npm run build && npm run preview
+CMD npm run build && npm run preview
