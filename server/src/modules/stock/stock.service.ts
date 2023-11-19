@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { GetStockHistoryDto } from './dto';
 import { Stock } from './entities/stock.entity';
-import { findMostProfitableRange } from '../../utils';
+import { calculateMostProfit } from '../../utils';
 import { GetStockHistoryResponse } from './types';
 import { ERROR_MESSAGES } from './constants';
 
@@ -31,16 +31,13 @@ export class StockService {
       throw new BadRequestException(ERROR_MESSAGES.INVALID_DATE_RANGE);
     }
 
-    //1699178050 -> 1699178170
-    const dummyDates = { from: '2023-11-05T09:54:10.000Z', to: '2023-11-05T09:56:10.000Z' };
-
     let sqlResult: Stock[];
     try {
       sqlResult = await this.stockRepository
         .createQueryBuilder('stock')
         .select(['stock.price', 'stock.timestamp'])
-        .where('stock.timestamp >= UNIX_TIMESTAMP(:from)', { from: dummyDates.from })
-        .andWhere('stock.timestamp <= UNIX_TIMESTAMP(:to)', { to: dummyDates.to })
+        .where('stock.timestamp >= UNIX_TIMESTAMP(:from)', { from })
+        .andWhere('stock.timestamp <= UNIX_TIMESTAMP(:to)', { to })
         .orderBy('stock.timestamp', 'ASC')
         .getMany();
     } catch (e) {
@@ -52,14 +49,14 @@ export class StockService {
       throw new NotFoundException(ERROR_MESSAGES.NO_RESULTS_FOUND);
     }
 
-    const profit = findMostProfitableRange(sqlResult);
+    const profit = calculateMostProfit(sqlResult);
     // TODO: Validate if profit = null
 
     return {
-      minDateTime: new Date(profit.buyTimestamp * 1000).toISOString(),
-      minPrice: profit.buyPrice,
-      maxDateTime: new Date(profit.sellTimestamp * 1000).toISOString(),
-      maxPrice: profit.sellPrice,
+      minDateTime: new Date(profit.minTimestamp * 1000).toISOString(),
+      minPrice: profit.minPrice,
+      maxDateTime: new Date(profit.maxTimestamp * 1000).toISOString(),
+      maxPrice: profit.maxPrice,
     };
   }
 }

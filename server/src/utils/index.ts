@@ -1,37 +1,27 @@
-export const findMostProfitableRange = (stockData) => {
-  if (stockData.length < 2) {
-    return null; // Not enough data to calculate profit
-  }
+import { Stock } from 'src/modules/stock/entities/stock.entity';
 
-  let minPriceIndex = 0;
+export const calculateMostProfit = (stockData: Stock[]) => {
+  let minPrice = stockData[0].price;
   let maxProfit = 0;
-  let buyTimestamp = 0;
-  let buyPrice = 0;
-  let sellTimestamp = 0;
-  let sellPrice = 0;
+  let minPriceIdx = 1;
+  let lastMinPriceIdx = 1;
+  let maxPriceIdx = 1;
 
-  for (let i = 1; i < stockData.length; i++) {
-    const currentPrice = stockData[i].price;
-    const minPrice = stockData[minPriceIndex].price;
-
-    if (currentPrice - minPrice > maxProfit) {
-      maxProfit = currentPrice - minPrice;
-      buyTimestamp = stockData[minPriceIndex].timestamp;
-      buyPrice = minPrice;
-      sellTimestamp = stockData[i].timestamp;
-      sellPrice = currentPrice;
-    }
-
-    while (i - minPriceIndex >= 1) {
-      minPriceIndex++; // Adjust the window size dynamically
+  for (let idx = 1; idx < stockData.length; idx++) {
+    if (stockData[idx].price < minPrice) {
+      minPrice = stockData[idx].price;
+      lastMinPriceIdx = idx;
+    } else if (stockData[idx].price - minPrice > maxProfit) {
+      maxProfit = stockData[idx].price - minPrice;
+      minPriceIdx = lastMinPriceIdx;
+      maxPriceIdx = idx;
     }
   }
 
   return {
-    buyTimestamp,
-    buyPrice,
-    sellTimestamp,
-    sellPrice,
-    // maxProfit,
+    minTimestamp: stockData[minPriceIdx].timestamp,
+    minPrice: stockData[minPriceIdx].price,
+    maxTimestamp: stockData[maxPriceIdx].timestamp,
+    maxPrice: stockData[maxPriceIdx].price,
   };
 };
