@@ -26,6 +26,8 @@ services:
       context: ./client
       dockerfile: Dockerfile
       target: development
+    depends_on:
+      - server
     volumes:
       - ./client/src:/app/src
       - ./client/index.html:/app/index.html
