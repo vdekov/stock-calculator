@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.notice-no-profit {
+  margin-top: 16px;
+}
+
 table.table-summary {
   margin-top: 16px;
   border: none;

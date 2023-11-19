@@ -8,9 +8,9 @@ import { screen, userEvent } from '@/utils/test-utils';
 
 const stockHistory = {
   minDateTime: '2023-11-05T09:55:20.000Z',
-  minPrice: '51.29',
+  minPrice: 51.29,
   maxDateTime: '2023-11-05T09:55:21.000Z',
-  maxPrice: '96.25',
+  maxPrice: 96.25,
 };
 
 const restHandlers = [

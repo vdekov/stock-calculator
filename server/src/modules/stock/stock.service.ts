@@ -44,13 +44,13 @@ export class StockService {
       throw new ServiceUnavailableException(ERROR_MESSAGES.SQL_ERROR);
     }
 
-    // Validation in case there are no results found to the search criteria in the database
-    if (!sqlResult.length) {
+    // Validation in case either there are no results found to the search criteria in the database
+    // or the list contains less than two records.
+    if (sqlResult.length < 2) {
       throw new NotFoundException(ERROR_MESSAGES.NO_RESULTS_FOUND);
     }
 
     const profit = calculateMostProfit(sqlResult);
-    // TODO: Validate if profit = null
 
     return {
       minDateTime: new Date(profit.minTimestamp * 1000).toISOString(),

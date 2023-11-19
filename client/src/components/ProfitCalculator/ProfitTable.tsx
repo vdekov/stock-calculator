@@ -1,5 +1,5 @@
-import { GetStockHistoryResponse } from '../../typings';
-import { dateAsString } from '../../utils/date';
+import { GetStockHistoryResponse } from '@/typings';
+import { dateAsString } from '@/utils/date';
 
 type Props = {
   investmentAmount: number;
@@ -12,6 +12,12 @@ export const ProfitTable: React.FC<Props> = ({ investmentAmount, stockHistory })
   }
 
   const { minDateTime, minPrice, maxDateTime, maxPrice } = stockHistory;
+
+  // Show a notice box when there is no any profit (i.e. max and min prices are equal)
+  if (minPrice === maxPrice) {
+    return <div>❗️ There is no profit available for the specified criteria.</div>;
+  }
+
   const sharesAmount = investmentAmount / minPrice;
   const profit = sharesAmount * maxPrice - investmentAmount;
 
