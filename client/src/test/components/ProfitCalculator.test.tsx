@@ -17,4 +17,14 @@ describe('ProfitCalculator UI component', () => {
     fireEvent.change(input, { target: { value: 100 } });
     expect(input).toHaveValue(100);
   });
+
+  it('not allows negative numbers', () => {
+    const input = screen.getByTestId('input-investment');
+
+    fireEvent.keyDown(input, { key: '-' });
+    expect(input).toHaveValue(null);
+    fireEvent.change(input, { target: { value: 123 } });
+    fireEvent.keyDown(input, { key: '-' });
+    expect(input).toHaveValue(123);
+  });
 });

@@ -1,6 +1,6 @@
 import './styles.css';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { GetStockHistoryResponse } from '@/typings';
 import { ProfitTable } from './ProfitTable';
 
@@ -13,8 +13,16 @@ export const ProfitCalculator: React.FC<Props> = ({ stockHistory }) => {
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = +event.target.value;
-    if (typeof value === 'number' && isFinite(value)) {
+
+    if (typeof value === 'number' && isFinite(value) && value >= 0) {
       setInvestmentAmount(value);
+    }
+  };
+
+  const onInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    // Do not allow negagitve numbers
+    if (event.key === '-') {
+      event.preventDefault();
     }
   };
 
@@ -22,7 +30,14 @@ export const ProfitCalculator: React.FC<Props> = ({ stockHistory }) => {
     <div className="wrapper-profit-calculator">
       <label className="label-profit-calculator">
         💵&nbsp;Investment amount
-        <input type="number" onChange={onInputChange} data-testid="input-investment" />
+        <input
+          type="number"
+          value={investmentAmount ? investmentAmount : ''}
+          min="0"
+          onChange={onInputChange}
+          onKeyDown={onInputKeyDown}
+          data-testid="input-investment"
+        />
       </label>
       <ProfitTable investmentAmount={investmentAmount} stockHistory={stockHistory} />
     </div>
