@@ -16,7 +16,7 @@ docker-compose up --build
 ## Usage
  - client access: http://localhost:5173
  - server access: http://localhost:3000
- - mysql access: localhost:3307 (user `root`` without password)
+ - mysql access: localhost:3307 (user `root` without password)
 
 **Note:** Make sure all three system ports `3000`, `3307` and `5173` are free to use.
 
