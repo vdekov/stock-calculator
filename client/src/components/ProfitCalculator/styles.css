@@ -18,3 +18,7 @@ table.table-summary {
 table.table-summary tr > td:first-child {
   font-weight: 700;
 }
+
+table tr > td {
+  white-space: nowrap;
+}

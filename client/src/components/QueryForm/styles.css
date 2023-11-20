@@ -1,6 +1,11 @@
+.query-form {
+  text-align: center;
+}
+
 .wrapper-query-form {
   position: relative;
   display: flex;
+  align-items: center;
   gap: 48px;
 }
 
@@ -35,4 +40,11 @@
 
 .btn-submit-query-form {
   margin-top: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper-query-form {
+    flex-direction: column;
+    gap: 16px;
+  }
 }

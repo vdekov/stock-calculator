@@ -36,7 +36,7 @@ export const ProfitTable: React.FC<Props> = ({ investmentAmount, stockHistory })
           <>
             <tr>
               <td>Shares: </td>
-              <td>{sharesAmount.toFixed(2)}</td>
+              <td>{sharesAmount.toFixed(6)}</td>
             </tr>
             <tr>
               <td>Profit: </td>
