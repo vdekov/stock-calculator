@@ -13,6 +13,13 @@ docker-compose -f docker-compose.prod.yml up --build -V
 docker-compose up --build
 ```
 
+## Usage
+ - client access: http://localhost:5173
+ - server access: http://localhost:3000
+ - mysql access: localhost:3307 (user `root`` without password)
+
+**Note:** Make sure all three system ports `3000`, `3307` and `5173` are free to use.
+
 ## Manually import SQL data
 By default the database will be populated on the initial start of the MySQL container,
 but in case you need to do it manually, you can run the following command:
