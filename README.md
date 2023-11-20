@@ -14,6 +14,12 @@ docker-compose up --build
 ```
 
 ## Manually import SQL data
+By default the database will be populated on the initial start of the MySQL container,
+but in case you need to do it manually, you can run the following command:
 ```
 docker exec -i stock-calculator-database mysql -uroot stock_calculator < ./db/dump/init.sql
 ```
+
+## Tests
+ - client: 100% coverage
+ - server: 63.36% coverage

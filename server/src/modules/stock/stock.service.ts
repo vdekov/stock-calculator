@@ -1,4 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GetStockHistoryDto } from './dto';
@@ -6,12 +12,18 @@ import { Stock } from './entities/stock.entity';
 import { calculateMostProfit } from '../../utils';
 import { GetStockHistoryResponse } from './types';
 import { ERROR_MESSAGES } from './constants';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class StockService {
+  private readonly logger = new Logger(StockService.name);
+
   constructor(@InjectRepository(Stock) private stockRepository: Repository<Stock>) {}
 
   async getStockHistory(getStockHistoryDto: GetStockHistoryDto): Promise<GetStockHistoryResponse> {
+    // Generate a random uuidv4 id to make easier when filtering the logs
+    const uuid = randomUUID();
+    this.logger.log(`getStockHistory params[${uuid}]: ${JSON.stringify(getStockHistoryDto)}`);
     const { from, to } = getStockHistoryDto;
 
     // Validate input parameters for the following cases:
@@ -51,12 +63,14 @@ export class StockService {
     }
 
     const profit = calculateMostProfit(sqlResult);
-
-    return {
+    const result = {
       minDateTime: new Date(profit.minTimestamp * 1000).toISOString(),
       minPrice: profit.minPrice,
       maxDateTime: new Date(profit.maxTimestamp * 1000).toISOString(),
       maxPrice: profit.maxPrice,
     };
+    this.logger.log(`getStockHistory response[${uuid}]: ${JSON.stringify(result)}`);
+
+    return result;
   }
 }
