@@ -3,8 +3,8 @@ import { Stock } from 'src/modules/stock/entities/stock.entity';
 export const calculateMostProfit = (stockData: Stock[]) => {
   let minPrice = stockData[0].price;
   let maxProfit = 0;
-  let minPriceIdx = 1;
-  let lastMinPriceIdx = 1;
+  let minPriceIdx = 0;
+  let lastMinPriceIdx = 0;
   let maxPriceIdx = 1;
 
   for (let idx = 1; idx < stockData.length; idx++) {
