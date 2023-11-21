@@ -1,4 +1,11 @@
 # stock-calculator
+
+## Short info
+The application is based on:
+ - client: Vite (React + TypeScript), Vitest (testing framework) 
+ - server: NestJS (powered by NodeJS 20.9), Jest (testing framework)
+ - database: MySQL 5.7
+
 The history data in the database can be accessed for the following period:
  - From: `Mon Nov 06 2023 18:53:16 GMT+0200 (Eastern European Standard Time)`
  - To: `Sat Nov 18 2023 19:13:15 GMT+0200 (Eastern European Standard Time)`
@@ -29,4 +36,4 @@ docker exec -i stock-calculator-database mysql -uroot stock_calculator < ./db/du
 
 ## Tests
  - client: 100% coverage
- - server: 63.36% coverage
+ - server: 63.42% coverage
