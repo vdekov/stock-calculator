@@ -1,5 +1,12 @@
+import './styles.css';
+
 import { useEffect, useState } from 'react';
-import { clearInputErrorDelay, inputInvestmentPattern, inputMaxInvestment } from './constants';
+import {
+  clearInputErrorDelay,
+  inputInvestmentPattern,
+  inputInvestmentPlaceholder,
+  inputMaxInvestment,
+} from './constants';
 import { formatNumber } from '@/utils';
 
 type Props = {
@@ -15,7 +22,7 @@ export const InputPriceAmount: React.FC<Props> = ({
   value,
   onChange,
   maxPriceAmount = inputMaxInvestment,
-  placeholder = '$',
+  placeholder = inputInvestmentPlaceholder,
 }) => {
   const [inputError, setInputError] = useState('');
 
@@ -47,7 +54,7 @@ export const InputPriceAmount: React.FC<Props> = ({
 
   return (
     <>
-      <label className="label-profit-calculator">
+      <label className="label-price-amount">
         {label}
         <input
           type="text"
@@ -59,7 +66,7 @@ export const InputPriceAmount: React.FC<Props> = ({
           data-testid="input-price-amount"
         />
       </label>
-      {!!inputError && inputError}
+      <div className={`notice-price-amount ${inputError ? 'visible' : ''}`}>{inputError}</div>
     </>
   );
 };

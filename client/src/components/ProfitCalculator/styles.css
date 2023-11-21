@@ -1,5 +1,4 @@
-.wrapper-profit-calculator,
-.label-profit-calculator {
+.wrapper-profit-calculator {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +9,6 @@
 }
 
 table.table-summary {
-  margin-top: 16px;
   border: none;
   text-align: left;
 }

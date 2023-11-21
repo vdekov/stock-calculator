@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&family=Lato:wght@400;700&display=swap');
 
 :root {
-  font-family: 'Lato', system-ui, sans-serif;
+  font-family: 'Chakra Petch', system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -73,13 +73,13 @@ label {
 
 input {
   width: 150px;
-  height: 40px;
-  padding: 4px;
+  max-height: 40px;
+  padding: 8px 4px;
   border: 2px solid gray;
   border-radius: 6px;
-  font-size: 15px;
-  font-family: 'Lato';
-  line-height: 40px;
+  font-family: 'Chakra Petch', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1;
 }
 
 @media screen and (max-width: 768px) {

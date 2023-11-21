@@ -2,7 +2,7 @@ import './styles.css';
 import { useRef } from 'react';
 import { noop } from '@/utils';
 import { formatDate, formatTime } from '@/utils/date';
-import { inputDatePattern, inputDatePlaceholder, inputTimePattern, inputTimePlaceholder } from './constants';
+import { inputDatePlaceholder, inputTimePlaceholder } from './constants';
 
 type Props = {
   defaultValue: Date;
@@ -34,7 +34,6 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
           min={minDate}
           max={maxDate}
           placeholder={inputDatePlaceholder}
-          pattern={inputDatePattern}
           onChange={onInputChange}
           data-testid="input-date"
         />
@@ -48,7 +47,6 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
           defaultValue={initialTime}
           step="1"
           placeholder={inputTimePlaceholder}
-          pattern={inputTimePattern}
           onChange={onInputChange}
           data-testid="input-time"
         />
