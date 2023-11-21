@@ -1,4 +1,5 @@
 import { GetStockHistoryResponse } from '@/typings';
+import { formatNumber } from '@/utils';
 import { dateAsString } from '@/utils/date';
 
 type Props = {
@@ -25,22 +26,22 @@ export const ProfitTable: React.FC<Props> = ({ investmentAmount, stockHistory })
     <table className="table-summary">
       <tbody>
         <tr>
-          <td>Buy at: </td>
+          <td>Buy at:</td>
           <td>{dateAsString(minDateTime)}</td>
         </tr>
         <tr>
-          <td>Sell at: </td>
+          <td>Sell at:</td>
           <td>{dateAsString(maxDateTime)}</td>
         </tr>
         {!!investmentAmount && (
           <>
             <tr>
-              <td>Shares: </td>
-              <td>{sharesAmount.toFixed(6)}</td>
+              <td>Shares:</td>
+              <td>{formatNumber(+sharesAmount.toFixed(6))}</td>
             </tr>
             <tr>
-              <td>Profit: </td>
-              <td>{profit.toFixed(2)}</td>
+              <td>Profit:</td>
+              <td>{formatNumber(+profit.toFixed(2))}</td>
             </tr>
           </>
         )}
