@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { clearInputErrorDelay, inputInvestmentPattern, inputMaxInvestment } from './constants';
+import { formatNumber } from '@/utils';
 
 type Props = {
   label: string;
@@ -35,7 +36,7 @@ export const InputPriceAmount: React.FC<Props> = ({
 
     if (inputInvestmentPattern.test(value) || value === '') {
       if (+value > maxPriceAmount) {
-        setInputError(`❗️ The maximum amount allowed is ${maxPriceAmount}`);
+        setInputError(`❗️ The maximum amount allowed is ${formatNumber(maxPriceAmount)}`);
         return;
       }
 
