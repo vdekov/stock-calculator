@@ -8,7 +8,9 @@ export const calculateMostProfit = (stockData: Stock[]) => {
   let maxPriceIdx = 1;
 
   for (let idx = 1; idx < stockData.length; idx++) {
-    if (stockData[idx].price < minPrice) {
+    if (stockData[idx].price === minPrice) {
+      lastMinPriceIdx = idx;
+    } else if (stockData[idx].price < minPrice) {
       minPrice = stockData[idx].price;
       lastMinPriceIdx = idx;
     } else if (stockData[idx].price - minPrice > maxProfit) {
