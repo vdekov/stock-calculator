@@ -39,7 +39,7 @@ export const InputDateTime: React.FC<Props> = ({ defaultValue, minDate, maxDate,
         />
       </label>
       <label>
-        🕗&nbsp;Time (24h)&nbsp;
+        🕗&nbsp;Time&nbsp;
         <input
           ref={timeInputRef}
           className="input-date-time"
