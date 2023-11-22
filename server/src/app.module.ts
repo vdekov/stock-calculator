@@ -3,7 +3,7 @@ import { ApiModule } from './modules/api/api.module';
 import { RouterModule } from '@nestjs/core';
 import { routes } from './routes';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Stock } from './modules/stock/entities/stock.entity';
+import { Stock } from './entities/stock.entity';
 
 const { DB_PORT, DB_DATABASE, DB_HOST, DB_USER } = process.env;
 

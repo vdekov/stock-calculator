@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { StockService } from './stock.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Stock } from './entities/stock.entity';
+import { Stock } from '../../entities/stock.entity';
 import { Repository } from 'typeorm';
 import { ServiceUnavailableException } from '@nestjs/common';
 
