@@ -8,7 +8,7 @@ export const getStockHistory = async (from: Date, to: Date) => {
       GetStockHistoryResponse,
       AxiosResponse<GetStockHistoryResponse>,
       GetStockHistoryParams
-    >('http://localhost:3000/api/stock/history', {
+    >(`http://${window.location.hostname}:3000/api/stock/history`, {
       from,
       to,
     });
