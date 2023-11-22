@@ -18,8 +18,6 @@ const { DB_PORT, DB_DATABASE, DB_HOST, DB_USER } = process.env;
       username: DB_USER,
       database: DB_DATABASE,
       entities: [Stock],
-      // retryAttempts: 100, // Make sure the DB is initialized
-      // synchronize: true, // synchronize: true; shouldn't be used in production
     }),
   ],
 })

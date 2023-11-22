@@ -36,4 +36,4 @@ docker exec -i stock-calculator-database mysql -uroot stock_calculator < ./db/du
 
 ## Tests
  - client: 100% coverage
- - server: 63.42% coverage
+ - server: 65.48% coverage
