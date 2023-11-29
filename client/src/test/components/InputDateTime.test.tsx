@@ -10,7 +10,7 @@ describe('InputDateTime UI component', () => {
     render(<InputDateTime {...props} />);
 
     expect(screen.getByLabelText(/📆 date/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/🕗 time \(24h\)/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/🕗 time/i)).toBeInTheDocument();
     expect(screen.getByTestId('input-date')).toHaveAttribute('placeholder', 'YYYY-MM-DD');
     expect(screen.getByTestId('input-date')).toHaveValue('2023-01-01');
     expect(screen.getByTestId('input-time')).toHaveAttribute('placeholder', 'HH:MM:SS');
